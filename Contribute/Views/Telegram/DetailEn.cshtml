@@ -1,0 +1,43 @@
+﻿@model ContributeComponents.Domains.Telegrams
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_TelegramLayout.cshtml";
+}
+
+<div class="row title--right"><div class="col-xs-12 text-right"><a href="./Detail?code=@Model.VerificationCode" class="langchange">中文</a></div></div>
+<div class="row">
+    <div class="col-md-12 logo-wrap">
+        <div class="logo-cont"><img src="~/images/logo.png" class="logo" /></div>
+    </div>
+
+    <div class="col-md-12 sometxt">1. Click the button below to join the GCC Telegraph Group, which will be airdropped in batches on Fridays</div>
+    <div class="col-md-12 text--centered"><a href="https://t.me/soft2b" target="_blank" class="btn btn-alt join-tme">Join the GCC Global Press Group</a></div>
+    <div class="col-md-12 sometxt">2. Copy and paste the following verification code into the GCC telegram group (required)</div>
+    <div class="code-group">
+        <span class="copy-txt">@Model.VerificationCode</span>
+        <a href="javascript:;" class="btn-copy">COPY</a>
+    </div>
+    <div class="col-md-12 sometxt">3. Share the following link to your friends, each recommended a group of successful friends, you can get 2 GCC!</div>
+    <div class="code-group">
+        <span class="copy-t">@Model.InviteUrl</span>
+        <span class="copy-txt hidden-xs">National mining, high rise space! Fitness chain GCC opened the first drop of candy, to join the telegraph group you can get 5 GCC, the more invitations, the more reward, to get in the car with me&ensp;@Model.InviteUrl</span>
+        <a href="javascript:;" class="btn-copy">COPY</a>
+    </div>
+</div>
+
+<div class="modal fade pop-tip" tabindex="-1" role="dialog">
+    <div class="alert alert-tip alert-dismissible" tabindex="-1">
+        <p class="tip-txt">copied</p>
+    </div>
+</div>
+<div class="row statistics text--centered">
+    <div class="col-xs-6">
+        <div class="cont">Invited<span>@ViewBag.TotalInviteCount</span></div>
+    </div>
+    <div class="col-xs-6">
+        <div class="cont">Earned GCC<span>@(ViewBag.GetStbCount + 5)</span></div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/Scripts/telegram.js"></script>
+}

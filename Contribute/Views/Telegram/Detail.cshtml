@@ -1,0 +1,44 @@
+﻿@model ContributeComponents.Domains.Telegrams
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_TelegramLayout.cshtml";
+}
+
+<div class="row title--right"><div class="col-xs-12 text-right"><a href="./DetailEn?code=@Model.VerificationCode" class="langchange">ENGLISH</a></div></div>
+<div class="row">
+    <div class="col-md-12 logo-wrap">
+        <div class="logo-cont"><img src="~/images/logo.png" class="logo" /></div>
+    </div>
+
+    <div class="col-md-12 sometxt">1. 点击以下按钮加入 GCC 电报群，将于每周五分批发放空投</div>
+    <div class="col-md-12 text--centered"><a href="https://t.me/soft2b" target="_blank" class="btn btn-alt join-tme">加入GCC全球官方电报群</a></div>
+    <div class="col-md-12 sometxt">2. 把以下验证码复制粘贴发送到 GCC 电报群里（必须）</div>
+    <div class="code-group">
+        <span class="copy-txt">@Model.VerificationCode</span>
+        <a href="javascript:;" class="btn-copy">复制</a>
+    </div>
+    <div class="col-md-12 sometxt">3. 把以下链接分享给好友，每推荐一个好友入群成功，即可获得2 个 GCC！</div>
+    <div class="code-group">
+        <span class="copy-url">@Model.InviteUrl</span>
+        <span class="copy-txt hidden-xs">全民挖矿，高上升空间！健身链GCC开启首次空投糖果，加入电报群即可获得5枚GCC,邀请越多，奖励越多，要上车的赶紧跟我来&ensp;@Model.InviteUrl</span>
+        <a href="javascript:;" class="btn-copy">复制</a>
+    </div>
+</div>
+
+<div class="modal fade pop-tip" tabindex="-1" role="dialog">
+    <div class="alert alert-tip alert-dismissible" tabindex="-1">
+        <p class="tip-txt">已复制</p>
+    </div>
+</div>
+<div class="row statistics text--centered">
+    <div class="col-xs-6">
+        <div class="cont">已成功邀请人数<span>@ViewBag.TotalInviteCount</span></div>
+    </div>
+    <div class="col-xs-6">
+        <div class="cont">已赚取 GCC<span>@(ViewBag.GetStbCount + 5)</span></div>
+    </div>
+</div>
+
+@section Scripts {
+<script src="~/Scripts/telegram.js"></script>
+}
