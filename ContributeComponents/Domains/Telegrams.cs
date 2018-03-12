@@ -37,6 +37,10 @@ namespace ContributeComponents.Domains
         /// </summary>
         public Country Country { get; set; }
         /// <summary>
+        /// InvitedTotalCount
+        /// </summary>
+        public int InvitedTotalCount { get; set; }
+        /// <summary>
         /// 创建时间
         /// </summary>
         public DateTime CreateTime { get; set; }

@@ -25,6 +25,11 @@ namespace Contribute.Controllers
 
         public static readonly TelegramBotClient Api = new TelegramBotClient(ConfigurationManager.AppSettings["token"]);
     }
+    public static class Configs
+    {
+
+        public static readonly string Domain= ConfigurationManager.AppSettings["domain"];
+    }
     public class HomeController : Controller
     {
         protected static ILog logger = LogManager.GetLogger(typeof(HomeController));
@@ -101,15 +106,15 @@ DATA:{4}
             string url = string.Empty;
             if (message.Chat.Id == -1001221163930)
             {
-                url = $"https://www.soft2b.com/telegram/KroeaVerification?verificationCode=";
+                url = $"{Configs.Domain}/telegram/KroeaVerification?verificationCode=";
             }
             else
             {
-                url = $"https://www.soft2b.com/telegram/Verification?verificationCode=";
+                url = $"{Configs.Domain}/telegram/Verification?verificationCode=";
             }
 
             if (message.Type == MessageType.TextMessage && message.Text.Contains("http") &&
-                !message.Text.Contains("soft2b"))
+                !message.Text.Contains("gymchain"))
             {
                 var deleteMessageResult = await Bot.Api.DeleteMessageAsync(message.Chat.Id, message.MessageId);
                 if (!deleteMessageResult)
@@ -121,7 +126,7 @@ DATA:{4}
                 return new HttpStatusCodeResult(200, "删除成功");
             }
             if (message.Type == MessageType.TextMessage && message.Text.Contains("www") &&
-                !message.Text.Contains("soft2b"))
+                !message.Text.Contains("gymchain"))
             {
 
                 var deleteMessageResult = await Bot.Api.DeleteMessageAsync(message.Chat.Id, message.MessageId);
@@ -134,7 +139,7 @@ DATA:{4}
                 return new HttpStatusCodeResult(200, "删除成功");
             }
             if (message.Type == MessageType.TextMessage && message.Text.Contains("t.me") &&
-                !message.Text.Contains("soft2b"))
+                !message.Text.Contains("gymchain"))
             {
                 var deleteMessageResult = await Bot.Api.KickChatMemberAsync(message.Chat.Id, message.From.Id);
                 if (!deleteMessageResult)

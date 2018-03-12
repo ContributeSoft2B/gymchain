@@ -11,7 +11,7 @@
     </div>
 
     <div class="col-md-12 sometxt">1. Click the button below to join the GCC Telegraph Group, which will be airdropped in batches on Fridays</div>
-    <div class="col-md-12 text--centered"><a href="https://t.me/soft2b" target="_blank" class="btn btn-alt join-tme">Join the GCC Global Press Group</a></div>
+    <div class="col-md-12 text--centered"><a href="https://t.me/gymchain_io" target="_blank" class="btn btn-alt join-tme">Join the GCC Global Press Group</a></div>
     <div class="col-md-12 sometxt">2. Copy and paste the following verification code into the GCC telegram group (required)</div>
     <div class="code-group">
         <span class="copy-txt">@Model.VerificationCode</span>
@@ -32,10 +32,10 @@
 </div>
 <div class="row statistics text--centered">
     <div class="col-xs-6">
-        <div class="cont">Invited<span>@ViewBag.TotalInviteCount</span></div>
+        <div class="cont">已成功邀请人数<span>@Model.InvitedTotalCount</span></div>
     </div>
     <div class="col-xs-6">
-        <div class="cont">Earned GCC<span>@(ViewBag.GetStbCount + 5)</span></div>
+        <div class="cont">已赚取 GCC<span>@(Model.InvitedTotalCount*2 + 5)</span></div>
     </div>
 </div>
 @section Scripts {

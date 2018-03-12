@@ -11,7 +11,7 @@
     </div>
 
     <div class="col-md-12 sometxt">1. 点击以下按钮加入 GCC 电报群，将于每周五分批发放空投</div>
-    <div class="col-md-12 text--centered"><a href="https://t.me/soft2b" target="_blank" class="btn btn-alt join-tme">加入GCC全球官方电报群</a></div>
+    <div class="col-md-12 text--centered"><a href="https://t.me/gymchain_io" target="_blank" class="btn btn-alt join-tme">加入GCC全球官方电报群</a></div>
     <div class="col-md-12 sometxt">2. 把以下验证码复制粘贴发送到 GCC 电报群里（必须）</div>
     <div class="code-group">
         <span class="copy-txt">@Model.VerificationCode</span>
@@ -32,10 +32,10 @@
 </div>
 <div class="row statistics text--centered">
     <div class="col-xs-6">
-        <div class="cont">已成功邀请人数<span>@ViewBag.TotalInviteCount</span></div>
+        <div class="cont">已成功邀请人数<span>@Model.InvitedTotalCount</span></div>
     </div>
     <div class="col-xs-6">
-        <div class="cont">已赚取 GCC<span>@(ViewBag.GetStbCount + 5)</span></div>
+        <div class="cont">已赚取 GCC<span>@(Model.InvitedTotalCount*2 + 5)</span></div>
     </div>
 </div>
 

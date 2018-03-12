@@ -13,9 +13,10 @@ namespace Contribute.Controllers
         private ContributeDbContext db = new ContributeDbContext();
         // GET: Telegram
         [HttpPost]
-        public JsonResult Index(string ethAddress, int parentId = 0,Country country= Country.Us)
-        {  var selectEthAddress = db.Telegrams.FirstOrDefault(t => t.EthAddress == ethAddress);
-            if (selectEthAddress!=null)
+        public JsonResult Index(string ethAddress, int parentId = 0, Country country = Country.Us)
+        {
+            var selectEthAddress = db.Telegrams.FirstOrDefault(t => t.EthAddress == ethAddress);
+            if (selectEthAddress != null)
             {
                 return Json(new { success = false, selectEthAddress.InviteUrl, selectEthAddress.VerificationCode, msg = "钱包地址已存在！" });
             }
@@ -28,13 +29,13 @@ namespace Contribute.Controllers
                 VerificationCode = $"/code {Guid.NewGuid()}",
                 Country = country
             };
-           
+
             db.Telegrams.Add(telegram);
             db.SaveChanges();
             var data = db.Telegrams.FirstOrDefault(t => t.EthAddress == ethAddress);
-            data.InviteUrl = $"https://www.soft2b.com/telegram/index?parentId={data.Id}";
+            data.InviteUrl = $"{Configs.Domain}/telegram/index?parentId={data.Id}";
             db.SaveChanges();
-            return Json(new { success = true, data.InviteUrl, data.VerificationCode,msg="注册成功！~" });
+            return Json(new { success = true, data.InviteUrl, data.VerificationCode, msg = "注册成功！~" });
         }
         [HttpPost]
         public JsonResult KoreaIndex(string ethAddress, int parentId = 0, Country country = Country.Korea)
@@ -51,13 +52,13 @@ namespace Contribute.Controllers
                 ParentId = parentId,
                 InviteUrl = "",
                 VerificationCode = $"/code {Guid.NewGuid()}",
-                Country=country
+                Country = country
             };
 
             db.Telegrams.Add(telegram);
             db.SaveChanges();
             var data = db.Telegrams.FirstOrDefault(t => t.EthAddress == ethAddress);
-            data.InviteUrl = $"https://www.soft2b.com/telegram/IndexKP?parentId={data.Id}";
+            data.InviteUrl = $"{Configs.Domain}/telegram/IndexKP?parentId={data.Id}";
             db.SaveChanges();
             return Json(new { success = true, data.InviteUrl, data.VerificationCode, msg = "등록 성공！~" });
         }
@@ -68,7 +69,7 @@ namespace Contribute.Controllers
         /// <returns></returns>
         public ActionResult Verification(string verificationCode)
         {
-            
+
             //var data = db.Telegrams.FirstOrDefault(t => t.VerificationCode == verificationCode.Trim());
             //if (data == null)
             //{
@@ -92,6 +93,12 @@ namespace Contribute.Controllers
                 return Json(new { success = false, msg = $"验证码：{verificationCode}已验证，不可重复验证" }, JsonRequestBehavior.AllowGet);
             }
             data.BindTime = DateTime.UtcNow;
+            if (data.ParentId != 0)
+            {
+                var parent = db.Telegrams.FirstOrDefault(t => t.Id == data.ParentId);
+                if (parent != null) parent.InvitedTotalCount++;
+            }
+
             db.SaveChanges();
             return Json(new { success = true, msg = $"收到验证码:{verificationCode},恭喜你验证成功，赶快把邀请链接分享给好友，每成功推荐一个好友入群，即可获得2个STB!", data.InviteUrl }, JsonRequestBehavior.AllowGet);
         }
@@ -129,20 +136,21 @@ namespace Contribute.Controllers
             db.SaveChanges();
             return Json(new { success = true, msg = $"받은 인증 코드:{verificationCode},축하해, 인증 성공, 어서 초대 연결 공유 친구, 활동 기간 동안 매 성공 - 한 친구 입사 군, 받을 수 있다 STB 2 개!", data.InviteUrl }, JsonRequestBehavior.AllowGet);
         }
-        
+
         // GET: TMe
-        public ActionResult Index(int parentId=0 )
+        public ActionResult Index(int parentId = 0)
         {
             ViewBag.ParentId = parentId;
             return View();
-            
+
         }
         public ActionResult Home(int parentId = 0)
         {
             ViewBag.ParentId = parentId;
             return View();
         }
-        public ActionResult IndexKP(int parentId = 0) {
+        public ActionResult IndexKP(int parentId = 0)
+        {
 
             ViewBag.ParentId = parentId;
             return View();
@@ -150,25 +158,28 @@ namespace Contribute.Controllers
         public ActionResult Detail(string code)
         {
             var data = db.Telegrams.FirstOrDefault(t => t.VerificationCode == code);
-            var list = db.Telegrams.Where(t => t.ParentId == data.Id&&t.BindTime.HasValue).ToList();
-            ViewBag.TotalInviteCount = list.Count;
-            ViewBag.GetStbCount = list.Count * 2;
+            if (data == null)
+            {
+                return Content("无效请求");
+            }
             return View(data);
         }
         public ActionResult DetailEn(string code)
         {
             var data = db.Telegrams.FirstOrDefault(t => t.VerificationCode == code);
-            var list = db.Telegrams.Where(t => t.ParentId == data.Id&& t.BindTime.HasValue).ToList();
-            ViewBag.TotalInviteCount = list.Count;
-            ViewBag.GetStbCount = list.Count * 2;
+            if (data == null)
+            {
+                return Content("无效请求");
+            }
             return View(data);
         }
         public ActionResult DetailKP(string code)
         {
             var data = db.Telegrams.FirstOrDefault(t => t.VerificationCode == code);
-            var list = db.Telegrams.Where(t => t.ParentId == data.Id && t.BindTime.HasValue).ToList();
-            ViewBag.TotalInviteCount = list.Count;
-            ViewBag.GetStbCount = list.Count * 2;
+            if (data == null)
+            {
+                return Content("无效请求");
+            }
             return View(data);
         }
     }
